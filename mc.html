@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedroom Interior Designs Calculator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bedroom Interior Designs Calculator</h1>
+        <div class="form-group">
+            <label for="length">Bedroom Length (in feet):</label>
+            <input type="number" class="form-control" id="length" placeholder="Enter length">
+        </div>
+        <div class="form-group">
+            <label for="width">Bedroom Width (in feet):</label>
+            <input type="number" class="form-control" id="width" placeholder="Enter width">
+        </div>
+        <div class="form-group">
+            <label for="height">Ceiling Height (in feet):</label>
+            <input type="number" class="form-control" id="height" placeholder="Enter height">
+        </div>
+        <div class="form-group">
+            <label for="rate">Price per Square Foot (₨):</label>
+            <input type="number" class="form-control" id="rate" placeholder="Enter rate">
+        </div>
+        <button class="btn btn-danger" onclick="calculatePrice()">Calculate Price</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function calculatePrice() {
+            const length = parseFloat(document.getElementById('length').value);
+            const width = parseFloat(document.getElementById('width').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+
+            if (isNaN(length) || isNaN(width) || isNaN(height) || isNaN(rate)) {
+                document.getElementById('result').innerHTML = 'Please enter valid measurements and rate.';
+            } else {
+                const area = length * width;
+                const volume = area * height;
+                const price = volume * rate;
+                document.getElementById('result').innerHTML = `The bedroom area is ${area} square feet, the volume is ${volume} cubic feet, and the estimated price is ₨${price.toFixed(2)}.`;
+            }
+        }
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
