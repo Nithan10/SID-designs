@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SID Designs | Premium Interiors</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #dc3545;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #444;
+            overflow-x: hidden;
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+        /* --- Glass Navbar --- */
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+
+        .glass-nav .nav-link {
+            color: #333;
+            font-weight: 500;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .glass-nav .nav-link:hover, .glass-nav .nav-link.active {
+            color: var(--primary);
+        }
+
+        /* Mobile Menu Polish */
+        .navbar-toggler { border: none; box-shadow: none; }
+        .navbar-toggler:focus { box-shadow: none; }
+        
+        @media (max-width: 991px) {
+            .navbar-collapse {
+                background: white;
+                padding: 20px;
+                border-radius: 12px;
+                margin-top: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+        }
+
+        /* --- Hero Carousel (Ken Burns Effect) --- */
+        .hero-carousel .carousel-item {
+            height: 100vh;
+            min-height: 600px;
+        }
+
+        .hero-carousel img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            /* Pro Tip: Gradient overlay helps text readability better than just brightness */
+            filter: brightness(0.7);
+            animation: zoomEffect 25s infinite alternate;
+        }
+
+        @keyframes zoomEffect {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15); }
+        }
+
+        .carousel-caption {
+            bottom: 0; top: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .hero-text-anim {
+            opacity: 0;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        .hero-delay-1 { animation-delay: 0.5s; }
+        .hero-delay-2 { animation-delay: 0.8s; }
+        .hero-delay-3 { animation-delay: 1.1s; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Cards Section --- */
+        .service-card {
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        }
+        .service-card img {
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .service-card:hover img {
+            transform: scale(1.05);
+        }
+
+        /* --- Masonry Gallery --- */
+        .masonry-container {
+            column-count: 3;
+            column-gap: 24px;
+        }
+        @media (max-width: 992px) { .masonry-container { column-count: 2; } }
+        @media (max-width: 576px) { .masonry-container { column-count: 1; } }
+
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        
+        /* Overlay Logic */
+        .overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 30px 20px 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .overlay { opacity: 1; }
+        .overlay h5 {
+            color: white;
+            font-weight: 600;
+            margin: 0;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover .overlay h5 { transform: translateY(0); }
+
+        /* --- Comparison Slider --- */
+        .comp-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            /* Aspect ratio placeholder to prevent layout shift */
+            aspect-ratio: 16/9; 
+        }
+
+        .comp-img {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .comp-img.after {
+            background-image: url('image/com.jpg'); /* The "After" Image */
+        }
+        
+        .comp-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%; /* Initial Position */
+            height: 100%;
+            overflow: hidden;
+            border-right: 3px solid white;
+            z-index: 10;
+        }
+        
+        /* This pseudo-element holds the "Before" image */
+        .comp-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('image/com1.jpg'); /* The "Before" Image */
+            background-size: cover;
+            background-position: center;
+            /* CRITICAL: Matches wrapper size so it doesn't squish */
+            width: 900px; /* Must match max-width of wrapper roughly, JS adjusts this */
+        }
+
+        .comp-slider-btn {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 45px; height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: ew-resize;
+            z-index: 20;
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+            color: var(--primary);
+        }
+
+                /* --- Pro Footer Styling --- */
+        footer {
+            background: #111; /* Deep Dark Background */
+            color: #b0b0b0;   /* Soft Gray Text for readability */
+            padding-top: 80px;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Headings */
+        footer h5 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Subtle red line under headings */
+        footer h5::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: #dc3545; /* Brand Red */
+            bottom: -8px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        /* Logo Styling */
+        .footer-logo {
+            filter: brightness(0) invert(1); /* Turns logo white */
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-logo:hover {
+            transform: scale(1.05); /* Subtle zoom on logo hover */
+        }
+
+        /* Link Animations */
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #b0b0b0;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: inline-block;
+        }
+
+        /* Hover: Slide Right + Color Change */
+        .footer-links a:hover {
+            color: #fff;
+            transform: translateX(8px);
+            text-shadow: 0px 0px 10px rgba(220, 53, 69, 0.6); /* Red glow */
+        }
+
+        /* Add an arrow icon on hover using CSS */
+        .footer-links a::before {
+            content: '\f105'; /* FontAwesome Angle Right */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 0;
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: translateX(-10px);
+        }
+
+        .footer-links a:hover::before {
+            opacity: 1;
+            transform: translateX(-5px);
+            margin-right: 5px;
+            color: #dc3545;
+        }
+
+        /* Social Buttons Animation */
+        .social-btn {
+            width: 42px; height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.08);
+            color: white;
+            border-radius: 50%;
+            margin-right: 12px;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy effect */
+        }
+
+        .social-btn:hover {
+            background: #dc3545;
+            transform: translateY(-5px) scale(1.1); /* Lift up and grow */
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3); /* Red shadow */
+            color: white;
+        }
+
+        /* Contact List Icons */
+        .contact-icon {
+            width: 35px;
+            height: 35px;
+            background: rgba(119, 114, 114, 0.1);
+            color: #dc3545;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .contact-item:hover .contact-icon {
+            background: #dc3545;
+            color: white;
+            transform: rotate(360deg); /* Spin effect */
+        }
+
+        /* Copyright Strip */
+        .copyright-section {
+            background-color: #0a0a0a; /* Darker than footer */
+            padding: 25px 0;
+            margin-top: 70px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg fixed-top glass-nav">
+    <div class="container">
+        <a class="navbar-brand text-danger fw-bold" href="index.html">
+            <img src="image/l1.png" width="50" height="30" alt="logo" class="d-inline-block align-text-top me-2">
+            SID Designs
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center">
+                <li class="nav-item"><a class="nav-link active" href="home.html">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Design Ideas</a>
+                    <ul class="dropdown-menu border-0 shadow-lg">
+                        <li><a class="dropdown-item py-2" href="ki.html">Modular Kitchen</a></li>
+                        <li><a class="dropdown-item py-2" href="wd.html">Wardrobes</a></li>
+                        <li><a class="dropdown-item py-2" href="mb.html">Master Bedroom</a></li>
+                        <li><a class="dropdown-item py-2" href="lr.html">Living Room</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="vis.html">Visit Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+            </ul>
+            <div class="d-flex justify-content-center mt-3 mt-lg-0">
+                <a class="btn btn-danger text-white px-4 py-2 rounded-pill shadow-sm fw-bold" href="cont.html">Contact Us</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div id="heroCarousel" class="carousel slide hero-carousel carousel-fade" data-bs-ride="carousel" data-bs-pause="false">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="image/c1.jpg" alt="Interior">
+            <div class="carousel-caption">
+                <div class="container">
+                    <h2 class="display-3 fw-bold hero-text-anim hero-delay-1">Love the way you Live</h2>
+                    <p class="fs-4 text-light d-none d-md-block mb-4 hero-text-anim hero-delay-2">Transform your house into a dream home with SID Designs.</p>
+                    <a href="form.html" class="btn btn-danger btn-lg rounded-pill px-5 hero-text-anim hero-delay-3 shadow">Book Consultation</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="image/2.jpg" alt="Kitchen">
+            <div class="carousel-caption">
+                <div class="container">
+                    <h1 class="display-3 fw-bold hero-text-anim hero-delay-1">Dream Kitchens Await</h1>
+                    <p class="fs-4 text-light d-none d-md-block mb-4 hero-text-anim hero-delay-2">Get an instant estimate for your modular kitchen today.</p>
+                    <a href="#" class="btn btn-danger btn-lg rounded-pill px-5 hero-text-anim hero-delay-3 shadow">Calculate Cost</a>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="image/3.jpg" alt="Showroom">
+            <div class="carousel-caption">
+                <div class="container">
+                    <h1 class="display-3 fw-bold hero-text-anim hero-delay-1">Experience Quality</h1>
+                    <p class="fs-4 text-light d-none d-md-block mb-4 hero-text-anim hero-delay-2">Visit our Experience Centre to feel the textures.</p>
+                    <a href="vis.html" class="btn btn-danger btn-lg rounded-pill px-5 hero-text-anim hero-delay-3 shadow">Visit Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" style="margin-top: -80px; position: relative; z-index: 50;">
+    <div class="card border-0 shadow-lg rounded-4 p-4 text-center bg-white" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-body">
+            <h4 class="card-title text-danger fw-bold mb-3">One-stop shop for all things interiors</h4>
+            <p class="card-text text-muted fs-5">Be it end-to-end interiors, renovation or modular solutions, we have it all. With a wide range of furniture & decor, we have your back from start to finish.</p>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h6 class="text-danger fw-bold text-uppercase ls-2">Our Expertise</h6>
+        <h2 class="fw-bold display-5">What We Offer</h2>
+    </div>
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card service-card h-100">
+                <img src="image/mi.jpg" class="card-img-top" alt="Modular">
+                <div class="card-body text-center p-4">
+                    <h4 class="fw-bold mb-3">Modular Interiors</h4>
+                    <p class="text-muted mb-4">Functional modular solutions for kitchen & wardrobes tailored to your needs.</p>
+                    <a href="mi.html" class="btn btn-outline-danger rounded-pill px-4 stretched-link">Explore More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card h-100">
+                <img src="image/fh.jpg" class="card-img-top" alt="Full Home">
+                <div class="card-body text-center p-4">
+                    <h4 class="fw-bold mb-3">Full Home Interior</h4>
+                    <p class="text-muted mb-4">End-to-end interiors for every nook and corner of your dream home.</p>
+                    <a href="#" class="btn btn-outline-danger rounded-pill px-4 stretched-link">Explore More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card service-card h-100">
+                <img src="image/f.jpg" class="card-img-top" alt="Furniture">
+                <div class="card-body text-center p-4">
+                    <h4 class="fw-bold mb-3">Furniture & Decor</h4>
+                    <p class="text-muted mb-4">Complete your space with premium products from our exclusive store.</p>
+                    <a href="#" class="btn btn-outline-danger rounded-pill px-4 stretched-link">Explore More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h6 class="text-danger fw-bold text-uppercase ls-2">Portfolio</h6>
+            <h2 class="fw-bold display-5">Inspiration Gallery</h2>
+            <p class="text-muted w-75 mx-auto">Curated designs to give your home a new look.</p>
+        </div>
+        
+        <div class="masonry-container">
+            <div class="gallery-item">
+                <img src="image/lr.jpg" alt="Living Room">
+                <div class="overlay"><h5>Modern Living Room</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:700/h:394/dpr:2/plain/https://d3gq2merok8n5r.cloudfront.net/bumblebee/in/interior-designer-near-me-1668702759-oSI2D/design-stories-1668705027-Hz88h/desktop-1668705032-723a7/new-folder-1689150183-B8fsX/kitchen-d-1689150612-ouirR.jpg" alt="Kitchen">
+                <div class="overlay"><h5>L-Shaped Kitchen</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:640/plain/https://d3gq2merok8n5r.cloudfront.net/abhinav/ond-1634120396-Obfdc/1-2025-1736068988-NDPD1/ond-1759736307-rv9SV/tv-1761583761-DjqGd/tv-27-1765607254-NlPRF.jpg" alt="TV Unit">
+                <div class="overlay"><h5>Minimalist TV Unit</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="image/dr.jpg" alt="Dining">
+                <div class="overlay"><h5>Luxury Dining</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:640/plain/https://d3gq2merok8n5r.cloudfront.net/abhinav/ond-1634120396-Obfdc/1-2025-1736068988-NDPD1/ond-1759736307-rv9SV/mbr-1759750466-DinYK/mbr-25-1765604480-MsWBd.jpg" alt="Bedrooms">
+                <div class="overlay"><h5>Bedrooms</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:640/plain/https://d3gq2merok8n5r.cloudfront.net/abhinav/ond-1634120396-Obfdc/1-2025-1736068988-NDPD1/ond-1759736307-rv9SV/ho-1759751013-HaOBb/ho-8-1763115242-3UGXg.jpg" alt="Texture">
+                <div class="overlay"><h5>Material Finishes</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:3840/plain/https://d3gq2merok8n5r.cloudfront.net/abhinav/design-ideas-thumbnails-1628773921-7vSz1/jas-2025-1752131881-hKij1/pooja-1752132785-Qjqrj/a276-1754559057-Wh65h.jpg" alt="Pooja Room">
+                <div class="overlay"><h5>Pooja Room Design</h5></div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://images.livspace-cdn.com/w:282/h:394/dpr:2/plain/https://d3gq2merok8n5r.cloudfront.net/bumblebee/in/interior-designer-near-me-1668702759-oSI2D/design-stories-1668705027-Hz88h/desktop-1668705032-723a7/new-folder-1689150183-B8fsX/foyer-d-1689150511-1Prr3.jpg" alt="Front Room">
+                <div class="overlay"><h5>Foyer Area</h5></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="py-5 bg-white">
+    <div class="container text-center">
+        <h6 class="text-danger fw-bold text-uppercase ls-2">Transformation</h6>
+        <h2 class="fw-bold mb-5 display-5">Before & After Renovation</h2>
+        
+        <div class="comp-wrapper" id="comparisonWidget">
+            <div class="comp-img after"></div>
+            
+            <div class="comp-overlay"></div>
+            
+            <div class="comp-slider-btn">
+                <i class="fas fa-arrows-alt-h"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row g-5"> <div class="col-lg-4 col-md-6">
+                <a href="index.html">
+                    <img src="image/l1.png" alt="SID Designs" width="100" class="footer-logo">
+                </a>
+                <p class="mb-4 lh-lg"> Transforming spaces into dreams. We provide premium interior solutions tailored to your lifestyle. From concept to creation, we are with you.
+                </p>
+                <div class="d-flex mt-4">
+                    <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://instagram.com/inte_rior_b_a_d" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6 ms-lg-auto">
+                <h5>Quick Links</h5>
+                <ul class="footer-links">
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="vis.html">Visit Store</a></li>
+                    <li><a href="cont.html">Contact Us</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <h5>Designs</h5>
+                <ul class="footer-links">
+                    <li><a href="ki.html">Modular Kitchen</a></li>
+                    <li><a href="wd.html">Wardrobes</a></li>
+                    <li><a href="mb.html">Master Bedroom</a></li>
+                    <li><a href="lr.html">Living Room</a></li>
+                </ul>
+            </div>
+
+<div class="col-lg-3 col-md-6">
+                <h5 class="text-white">Get in Touch</h5>
+                <ul class="list-unstyled text-white">
+                    <li class="mb-3 d-flex align-items-center contact-item">
+                        <span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+                        <span>123, Luxury Lane, Design City, India - 560001</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center contact-item">
+                        <span class="contact-icon"><i class="fas fa-phone-alt"></i></span>
+                        <a href="tel:+919876543210" class="text-decoration-none text-white hover-white">+91 98765 43210</a>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center contact-item">
+                        <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+                        <a href="mailto:hello@siddesigns.com" class="text-decoration-none text-white hover-white">hello@siddesigns.com</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright-section text-center">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0 small text-secondary">
+                        &copy; 2024 <span class="text-white fw-bold">SID Designs</span>. All Rights Reserved.
+                    </p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                    <a href="#" class="text-secondary text-decoration-none small me-3 hover-white">Privacy Policy</a>
+                    <a href="#" class="text-secondary text-decoration-none small hover-white">Terms of Use</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const widget = document.getElementById('comparisonWidget');
+        const overlay = widget.querySelector('.comp-overlay');
+        const sliderBtn = widget.querySelector('.comp-slider-btn');
+        let isDragging = false;
+
+        // Function to update widths (Responsive Fix)
+        function updateWidths() {
+            // Force the 'before' image (pseudo-element) to be the full width of the widget
+            // We set this via inline style on the overlay for the pseudo-element to inherit if needed, 
+            // but simplified: CSS handles the 'before' background size mostly.
+            // The key is ensuring the widget has height.
+        }
+
+        function slide(x) {
+            const rect = widget.getBoundingClientRect();
+            let position = ((x - rect.left) / rect.width) * 100;
+
+            // Limit bounds
+            if (position < 0) position = 0;
+            if (position > 100) position = 100;
+
+            overlay.style.width = position + "%";
+            sliderBtn.style.left = position + "%";
+        }
+
+        // Mouse Events
+        sliderBtn.addEventListener('mousedown', () => isDragging = true);
+        window.addEventListener('mouseup', () => isDragging = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            slide(e.clientX);
+        });
+
+        // Touch Events (Mobile)
+        sliderBtn.addEventListener('touchstart', () => isDragging = true);
+        window.addEventListener('touchend', () => isDragging = false);
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
+            slide(e.touches[0].clientX);
+        });
+
+        // Click to jump
+        widget.addEventListener('click', (e) => {
+            slide(e.clientX);
+        });
+        
+        // Init
+        window.addEventListener('resize', updateWidths);
+    });
+</script>
+
+</body>
+</html>

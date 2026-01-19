@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book Consultation | SID Designs</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #ff555d;
+      --dark: #1a1a1a;
+      --light: #f8f9fa;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fcfcfc;
+      color: #333;
+      /* REMOVED padding-top so the hero image sits behind the navbar */
+      padding-top: 0; 
+      overflow-x: hidden;
+    }
+
+    /* --- 1. Pro Glass Navbar --- */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.7); /* Transparency for glass effect */
+      backdrop-filter: blur(15px);           /* Strong blur */
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      padding: 15px 0;
+    }
+
+    .glass-nav .nav-link {
+      color: #333;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .glass-nav .nav-link:hover, .glass-nav .nav-link.active {
+      color: var(--primary);
+    }
+    
+    .btn-brand {
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50px;
+        padding: 8px 25px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    .btn-brand:hover {
+        background-color: #e0444c;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 85, 93, 0.4);
+    }
+
+    /* --- 2. Hero Section --- */
+    .form-hero {
+        /* Ensure you have an image here for the glass effect to be visible */
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('image/1.jpg'); 
+        background-size: cover;
+        background-position: center;
+        height: 50vh;
+        min-height: 350px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        /* Padding added to top to account for the fixed navbar overlay */
+        padding-top: 80px; 
+    }
+
+    /* --- 3. Form Styling --- */
+    .consultation-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        border: none;
+        overflow: hidden;
+        margin-top: -100px; /* Pulls card up into the hero section */
+        position: relative;
+        z-index: 10;
+    }
+
+    .form-control, .form-select {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border: 1px solid #eee;
+        background-color: #f9f9f9;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(255, 85, 93, 0.1);
+    }
+
+    /* --- 4. Process Section --- */
+    .process-icon-wrapper {
+        width: 80px; height: 80px;
+        background: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        margin: 0 auto 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        color: var(--primary);
+        font-size: 2rem;
+        transition: all 0.3s;
+        border: 2px solid #f0f0f0;
+    }
+    .process-step:hover .process-icon-wrapper {
+        background: var(--primary);
+        color: white;
+        transform: rotateY(180deg);
+    }
+
+    /* --- Animations --- */
+    .animate-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+    }
+    .animate-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* --- Footer --- */
+    footer { background: #111; color: #b0b0b0; padding-top: 80px; font-size: 15px; }
+    footer h5 { color: #fff; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; position: relative; display: inline-block; }
+    footer h5::after { content: ''; position: absolute; width: 40px; height: 3px; background: var(--primary); bottom: -8px; left: 0; }
+    .footer-logo { filter: brightness(0) invert(1); margin-bottom: 25px; transition: transform 0.3s; }
+    .footer-links a { color: #b0b0b0; text-decoration: none; transition: all 0.3s; display: inline-block; }
+    .footer-links a:hover { color: #fff; transform: translateX(5px); }
+    .social-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.08); color: white; border-radius: 50%; margin-right: 10px; text-decoration: none; transition: all 0.3s; }
+    .social-btn:hover { background: var(--primary); transform: translateY(-3px); color: white; }
+    .contact-icon-footer { width: 32px; height: 32px; background: rgba(255,255,255,0.1); color: var(--primary); display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; margin-right: 12px; }
+    .copyright-section { background-color: #000; padding: 25px 0; margin-top: 70px; border-top: 1px solid rgba(255,255,255,0.05); }
+    .hover-white:hover { color: #fff !important; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top glass-nav">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="#">
+        <img src="image/l1.png" width="50" height="30" alt="logo" class="d-inline-block align-text-top me-2 rounded">
+        SID Designs
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Design Ideas</a>
+            <ul class="dropdown-menu border-0 shadow">
+              <li><a class="dropdown-item" href="ki.html">Modular Kitchen</a></li>
+              <li><a class="dropdown-item" href="wd.html">Wardrobes</a></li>
+              <li><a class="dropdown-item" href="mb.html">Master Bedroom</a></li>
+              <li><a class="dropdown-item" href="#">Living Room</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="vis.html">Visit Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+        <a href="cont.html" class="btn btn-brand">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="form-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold animate-up">Start Your Project</h1>
+        <p class="fs-4 animate-up" style="animation-delay: 0.2s;">Tell us about your dream home, and we'll make it happen.</p>
+    </div>
+  </header>
+
+  <section class="container mb-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="consultation-card animate-up">
+                <div class="row g-0">
+                    
+                    <div class="col-md-7 p-5 bg-white">
+                        <h3 class="fw-bold mb-4">Inquiry Form</h3>
+                        <form action="http://localhost:8002/form" method="post">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" name="name" id="name" class="form-control" placeholder="Your Name" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" name="phone" id="phone" class="form-control" placeholder="Phone" required>
+                                </div>
+                                <div class="col-12">
+                                    <label for="project-type" class="form-label">Project Type</label>
+                                    <select class="form-select" name="project" id="project-type" required>
+                                        <option value="" selected disabled>Select Category</option>
+                                        <option value="Residential">Residential</option>
+                                        <option value="Commercial">Commercial</option>
+                                        <option value="Office">Office</option>
+                                        <option value="Kitchen">Modular Kitchen</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Your Message</label>
+                                    <textarea name="message" id="message" class="form-control" rows="4" placeholder="Tell us about your requirements" required></textarea>
+                                </div>
+                                <div class="col-12 mt-4 d-flex gap-2">
+                                    <button type="submit" class="btn btn-brand flex-grow-1 py-3 fw-bold">Submit Inquiry</button>
+                                    <button type="reset" class="btn btn-outline-secondary px-4 py-3">Reset</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-md-5 bg-light p-5 d-flex flex-column justify-content-center border-start">
+                        <div class="mb-5">
+                            <h4 class="fw-bold mb-3">Why SID Designs?</h4>
+                            <ul class="list-unstyled text-secondary">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Award-winning Designers</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 45-Day Delivery Guarantee</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 10-Year Warranty</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> 146 Quality Checks</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="fw-bold mb-3">Direct Contact</h4>
+                            <p class="mb-2"><i class="fas fa-phone-alt text-danger me-2"></i> <strong>Support:</strong> 1800-309-0930</p>
+                            <p class="mb-2"><i class="fas fa-envelope text-danger me-2"></i> <strong>Email:</strong> care@sid.com</p>
+                            <p><i class="fas fa-map-marker-alt text-danger me-2"></i> <strong>HQ:</strong> Design City, India</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="container my-5 py-5 text-center">
+      <h6 class="text-danger fw-bold text-uppercase">Workflow</h6>
+      <h2 class="fw-bold mb-5">How it Works</h2>
+      <div class="row g-4">
+          <div class="col-md-3 process-step animate-up">
+              <div class="process-icon-wrapper"><i class="fas fa-comments"></i></div>
+              <h5 class="fw-bold">1. Consultation</h5>
+              <p class="text-muted small">Meet our experts online or offline to discuss your vision.</p>
+          </div>
+          <div class="col-md-3 process-step animate-up" style="animation-delay: 0.2s;">
+              <div class="process-icon-wrapper"><i class="fas fa-pencil-ruler"></i></div>
+              <h5 class="fw-bold">2. Design</h5>
+              <p class="text-muted small">We create 2D/3D designs tailored to your preferences.</p>
+          </div>
+          <div class="col-md-3 process-step animate-up" style="animation-delay: 0.4s;">
+              <div class="process-icon-wrapper"><i class="fas fa-tools"></i></div>
+              <h5 class="fw-bold">3. Execution</h5>
+              <p class="text-muted small">Our team brings the design to life with precision.</p>
+          </div>
+          <div class="col-md-3 process-step animate-up" style="animation-delay: 0.6s;">
+              <div class="process-icon-wrapper"><i class="fas fa-key"></i></div>
+              <h5 class="fw-bold">4. Handover</h5>
+              <p class="text-muted small">Move into your dream home within 45 days.</p>
+          </div>
+      </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row g-5">
+        
+        <div class="col-lg-4 col-md-6">
+            <a href="index.html">
+                <img src="image/l1.png" alt="SID Designs" width="100" class="footer-logo">
+            </a>
+            <p class="mb-4 lh-lg">
+                Transforming spaces into dreams. We provide premium interior solutions tailored to your lifestyle.
+            </p>
+            <div class="d-flex mt-4">
+                <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/inte_rior_b_a_d" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6 ms-lg-auto">
+            <h5>Quick Links</h5>
+            <ul class="footer-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="vis.html">Visit Store</a></li>
+                <li><a href="cont.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+            <h5>Designs</h5>
+            <ul class="footer-links">
+                <li><a href="ki.html">Modular Kitchen</a></li>
+                <li><a href="wd.html">Wardrobes</a></li>
+                <li><a href="mb.html">Master Bedroom</a></li>
+                <li><a href="lr.html">Living Room</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <h5 class="text-white">Get in Touch</h5>
+            <ul class="list-unstyled text-white">
+                <li class="mb-3 d-flex align-items-center contact-item">
+                    <span class="contact-icon-footer"><i class="fas fa-map-marker-alt"></i></span>
+                    <span>123, Luxury Lane, Design City</span>
+                </li>
+                <li class="mb-3 d-flex align-items-center contact-item">
+                    <span class="contact-icon-footer"><i class="fas fa-phone-alt"></i></span>
+                    <a href="tel:18003090930" class="text-decoration-none text-white hover-white">1800-309-0930</a>
+                </li>
+                <li class="mb-3 d-flex align-items-center contact-item">
+                    <span class="contact-icon-footer"><i class="fas fa-envelope"></i></span>
+                    <a href="mailto:care@sid.com" class="text-decoration-none text-white hover-white">care@sid.com</a>
+                </li>
+            </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="copyright-section">
+      <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0 small text-secondary">
+                    © 2024 <span class="text-white fw-bold">SID Designs</span>. All Rights Reserved.
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-end mt-2 mt-md-0">
+                <a href="#" class="text-secondary text-decoration-none small me-3 hover-white">Privacy Policy</a>
+                <a href="#" class="text-secondary text-decoration-none small hover-white">Terms of Use</a>
+            </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-up').forEach(item => {
+            observer.observe(item);
+        });
+    });
+  </script>
+
+</body>
+</html>

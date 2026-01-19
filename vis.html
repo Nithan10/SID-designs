@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visit Our Experience Centre | SID Designs</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #ff555d; /* Brand Color */
+      --dark: #1a1a1a;
+      --light: #f8f9fa;
+      --text-muted: #6c757d;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #fcfcfc;
+      color: #333;
+      padding-top: 76px;
+      overflow-x: hidden;
+    }
+
+    /* --- 1. Glass Navbar --- */
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.9); /* Slightly more opaque for readability */
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      padding: 15px 0;
+    }
+
+    .glass-nav .nav-link {
+      color: #333;
+      font-weight: 500;
+      margin: 0 10px;
+      transition: color 0.3s ease;
+    }
+
+    .glass-nav .nav-link:hover, .glass-nav .nav-link.active {
+      color: var(--primary);
+    }
+    
+    .btn-brand {
+        background-color: var(--primary);
+        color: white;
+        border-radius: 50px;
+        padding: 8px 25px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+    .btn-brand:hover {
+        background-color: #e0444c;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(255, 85, 93, 0.4);
+    }
+
+    /* --- 2. Hero Section (Parallax) --- */
+    .visit-hero {
+        background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('image/3.jpg'); /* Use a showroom image */
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 60vh;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+    }
+
+    /* --- 3. Experience Cards --- */
+    .exp-card {
+        background: white;
+        border-radius: 16px;
+        padding: 40px 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        transition: all 0.4s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        border-top: 4px solid transparent;
+    }
+
+    .exp-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+        border-top: 4px solid var(--primary);
+    }
+
+    .exp-icon {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+        opacity: 0.8;
+    }
+
+    /* --- 4. Video Tour Section --- */
+    .video-section {
+        position: relative;
+        height: 400px;
+        background: url('image/lr.jpg') no-repeat center center/cover;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .video-overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.4);
+        transition: 0.3s;
+    }
+    .video-section:hover .video-overlay { background: rgba(0,0,0,0.2); }
+    
+    .play-btn {
+        width: 80px; height: 80px;
+        background: white;
+        border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        color: var(--primary);
+        font-size: 30px;
+        position: relative;
+        z-index: 2;
+        cursor: pointer;
+        animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7); }
+        70% { box-shadow: 0 0 0 20px rgba(255, 255, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+    }
+
+    /* --- 5. Map & Address Card --- */
+    .location-card {
+        background: var(--dark);
+        color: white;
+        border-radius: 20px;
+        padding: 40px;
+    }
+    .loc-icon { color: var(--primary); margin-right: 15px; font-size: 1.2rem; }
+
+    /* --- Animations --- */
+    .animate-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+    }
+    .animate-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* --- Footer (Consistent) --- */
+    footer { background: #111; color: #b0b0b0; padding-top: 80px; font-size: 15px; }
+    footer h5 { color: #fff; font-weight: 700; margin-bottom: 25px; text-transform: uppercase; position: relative; display: inline-block; }
+    footer h5::after { content: ''; position: absolute; width: 40px; height: 3px; background: var(--primary); bottom: -8px; left: 0; }
+    .footer-logo { filter: brightness(0) invert(1); margin-bottom: 25px; transition: transform 0.3s; }
+    .footer-logo:hover { transform: scale(1.05); }
+    .footer-links a { color: #b0b0b0; text-decoration: none; transition: all 0.3s; display: inline-block; }
+    .footer-links a:hover { color: #fff; transform: translateX(5px); }
+    .social-btn { width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.08); color: white; border-radius: 50%; margin-right: 10px; text-decoration: none; transition: all 0.3s; }
+    .social-btn:hover { background: var(--primary); transform: translateY(-3px); color: white; }
+    .copyright-section { background-color: #000; padding: 25px 0; margin-top: 70px; border-top: 1px solid rgba(255,255,255,0.05); }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg fixed-top glass-nav">
+    <div class="container">
+      <a class="navbar-brand text-danger fw-bold" href="#">
+        <img src="image/l1.png" width="50" height="30" alt="logo" class="d-inline-block align-text-top me-2 rounded">
+        SID Designs
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center">
+          <li class="nav-item"><a class="nav-link" href="home.html">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Design Ideas</a>
+            <ul class="dropdown-menu border-0 shadow">
+              <li><a class="dropdown-item" href="ki.html">Modular Kitchen</a></li>
+              <li><a class="dropdown-item" href="wd.html">Wardrobes</a></li>
+              <li><a class="dropdown-item" href="mb.html">Master Bedroom</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link active" href="vis.html">Visit Us</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        </ul>
+        <a href="cont.html" class="btn btn-brand">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="visit-hero">
+    <div class="container">
+        <h1 class="display-3 fw-bold animate-up">Experience the Magic</h1>
+        <p class="fs-4 animate-up" style="animation-delay: 0.2s;">Walk into our Experience Centre and touch your dream home before you build it.</p>
+        <a href="#booking" class="btn btn-light rounded-pill px-5 py-3 mt-4 fw-bold text-danger animate-up" style="animation-delay: 0.4s;">Book a Visit</a>
+    </div>
+  </header>
+
+  <section class="container my-5 py-5">
+    <div class="text-center mb-5 animate-up">
+        <h6 class="text-danger fw-bold text-uppercase ls-2">Inside the Studio</h6>
+        <h2 class="fw-bold display-5">What to Expect</h2>
+        <p class="text-muted w-75 mx-auto">More than just a showroom, it's an immersive design journey.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-3 animate-up" style="animation-delay: 0.2s;">
+            <div class="exp-card text-center">
+                <i class="fas fa-couch exp-icon"></i>
+                <h5 class="fw-bold">Live Mockups</h5>
+                <p class="text-muted small">Walk through fully furnished Living Rooms, Kitchens, and Bedrooms to feel the space.</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate-up" style="animation-delay: 0.3s;">
+            <div class="exp-card text-center">
+                <i class="fas fa-vr-cardboard exp-icon"></i>
+                <h5 class="fw-bold">VR Experience</h5>
+                <p class="text-muted small">Put on a headset and walk through your own future home design in Virtual Reality.</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate-up" style="animation-delay: 0.4s;">
+            <div class="exp-card text-center">
+                <i class="fas fa-layer-group exp-icon"></i>
+                <h5 class="fw-bold">Material Library</h5>
+                <p class="text-muted small">Touch and feel 5000+ finishes, fabrics, laminates, and stone samples.</p>
+            </div>
+        </div>
+        <div class="col-md-3 animate-up" style="animation-delay: 0.5s;">
+            <div class="exp-card text-center">
+                <i class="fas fa-user-tie exp-icon"></i>
+                <h5 class="fw-bold">Expert Designers</h5>
+                <p class="text-muted small">Sit down with our award-winning designers for a free 1-on-1 consultation.</p>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <section class="container mb-5 animate-up">
+    <div class="video-section shadow-lg">
+        <div class="video-overlay"></div>
+        <div class="play-btn">
+            <i class="fas fa-play" style="margin-left: 5px;"></i>
+        </div>
+        <div class="position-absolute bottom-0 start-0 p-4 text-white z-2">
+            <h3 class="fw-bold">Take a Virtual Tour</h3>
+            <p class="mb-0">Can't visit today? Watch our studio walkthrough.</p>
+        </div>
+    </div>
+  </section>
+
+  <section class="bg-light py-5" id="booking">
+    <div class="container">
+        <div class="row g-0 rounded-4 overflow-hidden shadow-lg bg-white">
+            
+            <div class="col-lg-5 p-0">
+                <div class="location-card h-100 d-flex flex-column justify-content-center">
+                    <h3 class="fw-bold mb-4">SID Designs Studio</h3>
+                    <div class="d-flex mb-4">
+                        <i class="fas fa-map-marker-alt loc-icon"></i>
+                        <p class="mb-0 text-white-50">123, Luxury Lane, Design City,<br>India - 560001</p>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <i class="fas fa-clock loc-icon"></i>
+                        <p class="mb-0 text-white-50">Open All Days<br>11:00 AM - 08:00 PM</p>
+                    </div>
+                    <div class="d-flex mb-4">
+                        <i class="fas fa-phone-alt loc-icon"></i>
+                        <p class="mb-0 text-white-50">1800-309-0930</p>
+                    </div>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-outline-light rounded-pill w-100 mt-auto">Get Directions <i class="fas fa-external-link-alt ms-2"></i></a>
+                </div>
+            </div>
+
+            <div class="col-lg-7 p-5">
+                <h4 class="fw-bold text-danger mb-2">Schedule Your Visit</h4>
+                <p class="text-muted mb-4">Book a slot to avoid waiting time and get a dedicated designer.</p>
+                
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted">Your Name</label>
+                            <input type="text" class="form-control" placeholder="John Doe">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted">Phone Number</label>
+                            <input type="tel" class="form-control" placeholder="+91 98765 43210">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted">Preferred Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small text-muted">Preferred Time</label>
+                            <select class="form-select">
+                                <option>11:00 AM - 01:00 PM</option>
+                                <option>01:00 PM - 04:00 PM</option>
+                                <option>04:00 PM - 08:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mt-4">
+                            <button class="btn btn-brand w-100 py-3 fw-bold" type="submit">Confirm Appointment</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="row g-5">
+        
+        <div class="col-lg-4 col-md-6">
+            <a href="index.html">
+                <img src="image/l1.png" alt="SID Designs" width="100" class="footer-logo">
+            </a>
+            <p class="mb-4 lh-lg">
+                Transforming spaces into dreams. We provide premium interior solutions tailored to your lifestyle.
+            </p>
+            <div class="d-flex mt-4">
+                <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://instagram.com/inte_rior_b_a_d" target="_blank" class="social-btn"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-btn"><i class="fab fa-pinterest-p"></i></a>
+            </div>
+        </div>
+
+        <div class="col-lg-2 col-md-6 ms-lg-auto">
+            <h5>Quick Links</h5>
+            <ul class="footer-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="vis.html">Visit Store</a></li>
+                <li><a href="cont.html">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-6">
+            <h5>Designs</h5>
+            <ul class="footer-links">
+                <li><a href="ki.html">Modular Kitchen</a></li>
+                <li><a href="wd.html">Wardrobes</a></li>
+                <li><a href="mb.html">Master Bedroom</a></li>
+                <li><a href="lr.html">Living Room</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <h5 class="text-white">Get in Touch</h5>
+            <ul class="list-unstyled text-white">
+                <li class="mb-3 d-flex align-items-center">
+                    <i class="fas fa-map-marker-alt text-danger me-3"></i>
+                    <span>123, Luxury Lane, Design City</span>
+                </li>
+                <li class="mb-3 d-flex align-items-center">
+                    <i class="fas fa-phone-alt text-danger me-3"></i>
+                    <a href="tel:18003090930" class="text-decoration-none text-white">1800-309-0930</a>
+                </li>
+                <li class="mb-3 d-flex align-items-center">
+                    <i class="fas fa-envelope text-danger me-3"></i>
+                    <a href="mailto:care@sid.com" class="text-decoration-none text-white">care@sid.com</a>
+                </li>
+            </ul>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="copyright-section">
+      <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0 small text-secondary">
+                    © 2024 <span class="text-white fw-bold">SID Designs</span>. All Rights Reserved.
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-up').forEach(item => {
+            observer.observe(item);
+        });
+    });
+  </script>
+
+</body>
+</html>
